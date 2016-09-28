@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  context-path: /messages
+
+spring:
+  datasource: # Database properties
+    url: jdbc:h2:./.tmp/cagisterdb
+    username: sa
+    password:
+  jpa: # JPA configuration
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop

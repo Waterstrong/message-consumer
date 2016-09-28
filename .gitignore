@@ -5,6 +5,7 @@
 /.gradle
 /.idea
 /.tmp
+/transaction-logs
 
 *.cache
 *.jar
