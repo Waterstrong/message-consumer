@@ -11,3 +11,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+
+message:
+  queue:
+    host: 192.168.99.100
+    name: DEV.MESSAGE.ADD

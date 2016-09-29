@@ -19,15 +19,18 @@ public class Message {
     @Column(name = "MESSAGE", nullable = false, length = 30)
     private String message;
 
+    public Message() {
+    }
+
+    public Message(String message) {
+        this.message = message;
+    }
+
     public Long getId() {
         return id;
     }
 
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }
