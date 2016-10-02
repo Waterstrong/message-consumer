@@ -15,7 +15,7 @@ public class MessageController {
     @Autowired
     private MessageRepository messageRepository;
 
-    @RequestMapping(method = GET, value = "/")
+    @RequestMapping(method = GET, value = "/messages")
     public ResponseEntity<?> getMessage() {
         return new ResponseEntity<>(messageRepository.findAll(), OK);
     }
