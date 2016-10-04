@@ -4,26 +4,24 @@ import static java.lang.String.format;
 import static org.apache.log4j.Logger.getLogger;
 import static org.joda.time.DateTime.now;
 
-import java.util.concurrent.CountDownLatch;
-
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-//@Transactional
+import ws.message.entity.Message;
+import ws.message.repository.MessageRepository;
+
+@Component
 public class RabbitMqConsumer {
     private final static Logger LOGGER = getLogger(RabbitMqConsumer.class);
 
-//    @Autowired
-//    private MessageRepository messageRepository;
+    @Autowired
+    private MessageRepository messageRepository;
 
-    private CountDownLatch latch = new CountDownLatch(1);
-
+    @Transactional
     public void onMessage(String message) {
         LOGGER.info(format("@%s Received: %s", now(), message));
-//        messageRepository.save(new Message(message));
-        latch.countDown();
-    }
-
-    public CountDownLatch getLatch() {
-        return latch;
+        messageRepository.save(new Message(message));
     }
 }
