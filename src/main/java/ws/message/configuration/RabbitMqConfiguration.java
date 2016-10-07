@@ -3,7 +3,6 @@ package ws.message.configuration;
 import org.springframework.amqp.rabbit.connection.AbstractConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,20 +37,15 @@ public class RabbitMqConfiguration {
     private Long receiveTimeout;
 
     @Bean
-    SimpleMessageListenerContainer container(MessageListenerAdapter listenerAdapter) {
+    SimpleMessageListenerContainer container(RabbitMqConsumer messageListener) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory());
         container.setQueueNames(queueNames);
-        container.setMessageListener(listenerAdapter);
+        container.setMessageListener(messageListener);
         container.setRecoveryInterval(recoveryInterval);
         container.setReceiveTimeout(receiveTimeout);
         container.setDefaultRequeueRejected(false);
         return container;
-    }
-
-    @Bean
-    MessageListenerAdapter listenerAdapter(RabbitMqConsumer rabbitMqConsumer) {
-        return new MessageListenerAdapter(rabbitMqConsumer, "onMessage");
     }
 
     private AbstractConnectionFactory connectionFactory() {

@@ -6,11 +6,13 @@ sudo service docker up
 docker-compose up
 ```
 
-[Topic](http://192.168.99.100:15672/#/exchanges/%2F/DEV.MESSAGE.TOPIC.MAIN)
+[GET Messages](http://localhost:8080/consumer/messages)
 
-[Queue1](http://192.168.99.100:15672/#/queues/%2F/DEV.MESSAGE.QUEUE.APP1)
+[Topic](http://192.168.99.105:15672/#/exchanges/%2F/DEV.MESSAGE.TOPIC.MAIN)
 
-[Queue2](http://192.168.99.100:15672/#/queues/%2F/DEV.MESSAGE.QUEUE.APP2)
+[Queue1](http://192.168.99.105:15672/#/queues/%2F/DEV.MESSAGE.QUEUE.APP1)
+
+[Queue2](http://192.168.99.105:15672/#/queues/%2F/DEV.MESSAGE.QUEUE.APP2)
 
 content_encoding=UTF-8
 
