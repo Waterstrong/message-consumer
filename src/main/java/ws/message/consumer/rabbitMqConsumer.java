@@ -19,7 +19,7 @@ public class RabbitMqConsumer {
     @Autowired
     private MessageRepository messageRepository;
 
-    @Transactional
+//    @Transactional
     public void onMessage(String message) {
         LOGGER.info(format("@%s Received: %s", now(), message));
         messageRepository.save(new Message(message));

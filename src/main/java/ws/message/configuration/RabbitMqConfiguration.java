@@ -16,15 +16,36 @@ public class RabbitMqConfiguration {
     @Value("${message.queue.host}")
     private String queueHost;
 
-    @Value("${message.queue.name}")
-    private String queueName;
+    @Value("#{'${message.queue.names}'.split(',')}")
+    private String[] queueNames;
+
+    @Value("${message.queue.username}")
+    private String username;
+
+    @Value("${message.queue.password}")
+    private String password;
+
+    @Value("${message.queue.port:5672}")
+    private int port;
+
+    @Value("${message.queue.virtualHost:/}")
+    private String virtualHost;
+
+    @Value("${message.queue.recoveryInterval}")
+    private Long recoveryInterval;
+
+    @Value("${message.queue.receiveTimeout}")
+    private Long receiveTimeout;
 
     @Bean
     SimpleMessageListenerContainer container(MessageListenerAdapter listenerAdapter) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory());
-        container.setQueueNames(queueName);
+        container.setQueueNames(queueNames);
         container.setMessageListener(listenerAdapter);
+        container.setRecoveryInterval(recoveryInterval);
+        container.setReceiveTimeout(receiveTimeout);
+        container.setDefaultRequeueRejected(false);
         return container;
     }
 
@@ -36,6 +57,10 @@ public class RabbitMqConfiguration {
     private AbstractConnectionFactory connectionFactory() {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(queueHost);
+        factory.setUsername(username);
+        factory.setPassword(password);
+        factory.setPort(port);
+        factory.setVirtualHost(virtualHost);
         return new CachingConnectionFactory(factory);
     }
 
