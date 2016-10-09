@@ -12,11 +12,9 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
-message:
-  queue:
-    host: 192.168.56.105
-    names: DEV.MESSAGE.QUEUE.APP1
-    username: guest
-    password: guest
-    recoveryInterval: 30000
-    receiveTimeout: 1000
+rabbitmq:
+  uri: amqp://guest:guest@192.168.56.105:5672
+  queueNames: DEV.MESSAGE.QUEUE.APP1
+  recoveryInterval: 10000
+  receiveTimeout: 1000
+
