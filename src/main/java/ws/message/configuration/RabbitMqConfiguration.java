@@ -26,9 +26,9 @@ public class RabbitMqConfiguration {
     private Long receiveTimeout;
 
     @Bean
-    SimpleMessageListenerContainer container(RabbitMqConsumer messageListener) {
+    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, RabbitMqConsumer messageListener) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory());
+        container.setConnectionFactory(connectionFactory);
         container.setQueueNames(queueNames);
         container.setMessageListener(messageListener);
         container.setRecoveryInterval(recoveryInterval);
@@ -37,7 +37,8 @@ public class RabbitMqConfiguration {
         return container;
     }
 
-    private ConnectionFactory connectionFactory() {
+    @Bean
+    ConnectionFactory connectionFactory() {
         return new CachingConnectionFactory(URI.create(rabbitUri));
     }
 
