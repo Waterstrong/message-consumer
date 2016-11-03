@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ws.message.consumer.RabbitMqConsumer;
+import ws.message.exception.MessageErrorHandler;
 
 @Configuration
 public class RabbitMqConfiguration {
@@ -26,7 +27,9 @@ public class RabbitMqConfiguration {
     private Long receiveTimeout;
 
     @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, RabbitMqConsumer messageListener) {
+    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
+                                             RabbitMqConsumer messageListener,
+                                             MessageErrorHandler errorHandler) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(queueNames);
@@ -34,6 +37,7 @@ public class RabbitMqConfiguration {
         container.setRecoveryInterval(recoveryInterval);
         container.setReceiveTimeout(receiveTimeout);
         container.setDefaultRequeueRejected(false);
+        container.setErrorHandler(errorHandler);
         return container;
     }
 

@@ -26,5 +26,9 @@ public class RabbitMqConsumer implements MessageListener {
         String bodyContent = new String(message.getBody());
         LOGGER.info(format("@@@@@@@@%s Received: %s\n", now(), bodyContent));
         messageRepository.save(new ws.message.entity.Message(bodyContent));
+
+        if(bodyContent.equals("error")) {
+            throw new RuntimeException("============Simulate Error\n\n");
+        }
     }
 }
